@@ -1,0 +1,158 @@
+import sys
+
+
+count_progress=0
+count_trailer=0
+count_exclude=0
+count_retriever=0
+pass_credit=0
+defer_credit=0
+fail_credit=0
+total=0
+total_1=0
+List =[]
+ID_no=[]
+gg={}
+option=''
+x=''
+
+s1= '****************'
+print(f"{s1:>40}\n_____MAIN VERSION_____")
+print()
+
+while option!='y' or option!='q':
+    no= input ('Enter student ID number : ').lower() #get the UOW numbers
+    print ()
+    if len(no)==8 and no[0]=='w' :    #check the ID number validation
+        if no not in ID_no:
+            ID_no.append(no)  #add the id no to the lists
+        else:
+            print ('Already entered ID number..!')   #check the same data enterd
+            print()
+            continue
+    else:
+        print ('Invalid ID Number...!')
+        print()
+        continue
+
+            
+    while option=='y' or option!='q':
+        try:
+            pass_credit=int(input('Enter your total PASS credits:'))  #check the conditions
+            if pass_credit <=120 and pass_credit%20==0:
+                defer_credit=int(input('Enter your total DEFER credits:')) 
+            else:
+                print ('Out of range')
+                print()
+                continue
+
+            if defer_credit<=120 and defer_credit%20==0:
+                fail_credit=int(input('Enter your total FAIL credits:')) 
+            else:
+                print('out of range')
+                print ()
+                continue
+            if fail_credit<=120 and defer_credit%20==0:
+                pass
+            else:
+                print('out of range')
+                print ()
+                continue
+
+            total=(fail_credit+defer_credit+pass_credit)
+            if total==120 and total%20==0 :  
+                pass
+            else:
+                print('Total incorrect')
+                print()
+                continue
+
+        except ValueError:
+                print ('Integer requied')         
+                print()
+                continue
+                       
+        while total!=0:
+            if (pass_credit==120)and (defer_credit==0)and (fail_credit==0):     #entering to the corrects outcomes
+                outcome = 'Progress'
+                print (outcome)                          
+                count_progress+=1
+                print()
+                break
+            
+            elif (pass_credit==100)and (defer_credit<=20)and (fail_credit<=20):  
+                outcome = 'Progress(-module trailer)'
+                print (outcome)
+                count_trailer+=1
+                print()
+                break
+            elif (pass_credit<=40)and (defer_credit<=40) and (fail_credit>=80):
+                outcome = 'Excluded'
+                print(outcome)
+                count_exclude+=1
+                print()
+                break
+            else:
+                outcome = 'module retriever'
+                print(outcome)
+                count_retriever+=1
+                print()
+                break
+
+        input_credits=(outcome,'-',pass_credit,defer_credit,fail_credit)   #adding outcomes to the temparary list
+        List.append(input_credits)
+        while option =='y' or option !='q':
+            option=str(input("Would you like to enter another set of data? \nEnter 'y' for yes or 'q' to quit and view results: ")) #repitition
+            option=option.lower()
+            if option=='y':
+                print()
+                break
+            elif option=='q':
+                print()
+                break
+            else:
+                print()     
+                continue
+
+            
+        if option=='y':
+            print()
+            break
+        else:
+            pass
+        print()
+        
+
+        
+        
+
+#___________________________PART 4 - DICTIONARY _____________________________________________
+                
+
+        print ('_'*10,'DICTIONARY','_'*10)
+        print()
+        for m in range (len(ID_no)):  #adding two lists to the dictionary
+            gg[ID_no[m]]=List[m]       # ID_no- key   List-value
+
+        dicti=str(gg)[1:-1]
+        dicti=dicti.replace("'","")     #remove the () and ' 
+        dicti=dicti.replace("(","")
+        dicti=dicti.replace(")","")
+        print (dicti)
+        print()
+        s1= '****************'
+        print(f'{s1:>40}')
+        sys.exit()            #exit the program
+
+
+
+#REFERENCES
+            #python documentation
+            #How to think like a computer scientist(Learning with python)
+        
+                
+                
+
+            
+
+            
